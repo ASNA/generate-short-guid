@@ -1,0 +1,45 @@
+﻿Using System
+Using System.Collections.Specialized
+Using System.Text
+
+BegClass Program
+
+	BegSr Main Shared(*Yes) Access(*Public) Attributes(System.STAThread())
+		DclSrParm args Type(*String) Rank(1)
+
+		DclFld tc Type(TestClasses) New() 
+
+		tc.Run() 
+
+		Console.WriteLine('Press any key to continue...') 
+		Console.ReadKey()
+	EndSr
+
+EndClass
+
+BegClass TestClasses
+
+	BegSr Run Access(*Public) 
+        DclFld UniqueValue Type(*String) 
+        UniqueValue = GetShortGuid()
+                
+        Console.WriteLine(String.Format('{0}', UniqueValue))        
+        Console.WriteLine(UniqueValue.Length)         
+	EndSr
+
+    // This uses this library
+    // https://hashids.org/net/
+    // to generate the short guid. 
+    // This returns a unique 10-char string
+    // that starts with 'X'.
+    BegFunc GetShortGuid Type(*String) 
+        DclFld Hasher Type(HashidsNet.Hashids) 
+        DclFld Salt Type(*Integer4) 
+
+        Salt = DateTime.Now().ToString('ffffff')
+        Hasher = *New HashIdsNet.Hashids(Salt.ToString(), 9)
+
+        LeaveSr ('X' + Hasher.Encode(Salt)).ToUpper()
+    EndFunc 
+
+EndClass
