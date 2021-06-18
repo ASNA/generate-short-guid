@@ -16,3 +16,11 @@ This code always returns a 10-character short GUID that starts with 'X'. This ca
 
         LeaveSr ('X' + Hasher.Encode(Salt)).ToUpper()
     EndFunc 
+
+Calls to this routine must be at least 1ms apart or you'll a GUID clash. If you are using this in a tight loop, use a SLEEP to pause the loop slightly.
+
+    Do... 
+        SLEEP 1 
+        Salt = DateTime.Now().ToString('ffffff')
+        Hasher = *New HashIdsNet.Hashids(Salt.ToString(), 9)
+    EndDo         
