@@ -36,8 +36,10 @@ BegClass TestClasses
         DclFld Hasher Type(HashidsNet.Hashids) 
         DclFld Salt Type(*Integer4) 
 
+        DclConst SHORT_GUID_LENGTH Value(9) 
+
         Salt = DateTime.Now().ToString('ffffff')
-        Hasher = *New HashIdsNet.Hashids(Salt.ToString(), 9)
+        Hasher = *New HashIdsNet.Hashids(Salt.ToString(), SHORT_GUID_LENGTH)
 
         LeaveSr ('X' + Hasher.Encode(Salt)).ToUpper()
     EndFunc 
